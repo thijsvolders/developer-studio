@@ -52,7 +52,13 @@ public class CARMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	public String finalName;
-    
+
+	/**
+	 * classifier to use for the resulting CAR file.
+	 *
+	 * @parameter expression="${classifier}"
+	 */
+	public String classifier;
 
 	/**
 	 * @parameter default-value="${project}"
@@ -107,6 +113,9 @@ public class CARMojo extends AbstractMojo {
 		CAppArtifact cAppArtifact = new CAppArtifact(project,null);
 		collectArtifacts(cAppArtifact, cAppArtifactDependencies);
 		try {
+			if (classifier != null) {
+				cAppArtifact.setName(project.getArtifactId() + "-" + classifier);
+			}
 			cAppArtifact.setRoot(true);
 			cAppArtifact.toFile(new File(getArchiveDir(),"artifacts.xml"));
 			for (CAppArtifactDependency cAppDependency : cAppArtifactDependencies.values()) {

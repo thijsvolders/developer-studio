@@ -57,6 +57,7 @@ public class CAppArtifact extends AbstractXMLDoc{
 	private String file;
 	private boolean root;
 	private String type;
+	private String name;
 	
 	public boolean isRoot() {
 		return root;
@@ -69,14 +70,24 @@ public class CAppArtifact extends AbstractXMLDoc{
 	public CAppArtifact(MavenProject project, String serverRole) {
 		setProject(project);
 		setServerRole(serverRole);
+
+		this.name = getProject().getArtifactId();
 	}
 
 	public String getId(){
 		return getProject().getGroupId()+":"+getProject().getArtifactId()+":"+getProject().getVersion();
 	}
-	
+
+	/**
+	 * Override the CAppArtiface name
+	 * @param newName the new name to use for this artifact.
+	 */
+	public void setName(String newName) {
+		this.name = newName;
+	}
+
 	public String getName() {
-		return getProject().getArtifactId();
+		return name;
 	}
 
 	public String getVersion() {
